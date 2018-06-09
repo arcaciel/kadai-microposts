@@ -15,6 +15,10 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
+    favos = Favorite.where(like_id: @micropost.id)
+    favos.each do |favo|
+      favo.destroy
+    end
     @micropost.destroy
     flash[:success] = 'メッセージを削除しました。'
     redirect_back(fallback_location: root_path)
